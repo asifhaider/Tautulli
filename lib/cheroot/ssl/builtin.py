@@ -78,10 +78,8 @@ def _loopback_for_cert_thread(context, server):
 
 def _loopback_for_cert(certificate, private_key, certificate_chain):
     """Create a loopback connection to parse a cert with a private key."""
-    context = ssl.create_default_context(cafile=certificate_chain)
+    context = ssl._create_unverified_context(cafile=certificate_chain)
     context.load_cert_chain(certificate, private_key)
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
 
     # Python 3+ Unix, Python 3.5+ Windows
     client, server = socket.socketpair()
